@@ -26,11 +26,11 @@ class PlayerHand < Hand
   def pick_hand
     while true
       puts "Choose one: (p/r/s)"
-      player_choice = gets.chomp.downcase
-      break if Game::CHOICES.keys.include? player_choice
+      choice = gets.chomp.downcase
+      break if Game::CHOICES.keys.include? choice
     end
 
-    puts "#{player} picked #{Game::CHOICES[player_choice]}."
+    puts "#{player} picked #{Game::CHOICES[choice]}."
   end
 end
 
@@ -42,7 +42,9 @@ class ComputerHand < Hand
   end
 
   def pick_hand
-    puts "#{computer} picks hand"
+    choice = Game::CHOICES.keys.sample 
+
+    puts "#{computer} picked #{Game::CHOICES[choice]}."
   end
 end
 
