@@ -24,7 +24,11 @@ class PlayerHand < Hand
   end
   
   def pick_hand
-    puts "#{player} picks hand"
+    while true
+      puts "Choose one: (p/r/s)"
+      player_choice = gets.chomp.downcase
+      break if Game::CHOICES.keys.include? player_choice
+    end
   end
 end
 
@@ -42,6 +46,9 @@ end
 
 class Game
   attr_reader :player_hand, :computer_hand
+
+  CHOICES = {"p" => "paper", "r" => "rock", "s" => "scissors"}
+
   def initialize
     @player_hand = PlayerHand.new
     @computer_hand = ComputerHand.new
