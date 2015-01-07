@@ -59,7 +59,6 @@ class Game
   end
 
   def display_winning_message(winning_choice, winner, losing_choice, loser)
-    puts "#{winner} picked #{CHOICES[winning_choice]}, #{loser} picked #{CHOICES[losing_choice]}"
     case winning_choice
       when "p"
         puts "Paper wraps rock!"
