@@ -1,6 +1,3 @@
-# Each player selects a hand (either rock, paper or scissors)
-# Hands are compared and if players selected the same thing it it's a tie
-# Otherwise p > r, r > s, s > p
 class Player
   attr_accessor :name
 
@@ -14,6 +11,12 @@ class Player
 end
 
 class Hand
+  def initialize
+  end
+
+  def display_message(which_player, choice)
+    puts "#{which_player} picked #{Game::CHOICES[choice]}."
+  end
 end
 
 class PlayerHand < Hand
@@ -29,8 +32,7 @@ class PlayerHand < Hand
       choice = gets.chomp.downcase
       break if Game::CHOICES.keys.include? choice
     end
-
-    puts "#{player} picked #{Game::CHOICES[choice]}."
+    choice
   end
 end
 
@@ -43,8 +45,6 @@ class ComputerHand < Hand
 
   def pick_hand
     choice = Game::CHOICES.keys.sample 
-
-    puts "#{computer} picked #{Game::CHOICES[choice]}."
   end
 end
 
@@ -58,9 +58,43 @@ class Game
     @computer_hand = ComputerHand.new
   end
 
+  def display_winning_message(winning_choice, winner, losing_choice, loser)
+    puts "#{winner} picked #{CHOICES[winning_choice]}, #{loser} picked #{CHOICES[losing_choice]}"
+    case winning_choice
+      when "p"
+        puts "Paper wraps rock!"
+      when "s"
+        puts "Scissors cut through paper!"
+      when "r"
+        puts "Rock smashes scissors!"
+    end
+    puts "#{winner} wins!"
+  end
+
+  def compare_results(player, player_choice, computer, computer_choice)
+    if computer_choice == player_choice
+      puts "It's a tie!"
+    elsif (player_choice == "p" && computer_choice == "r") || (player_choice == "s" && computer_choice == "p") || (player_choice == "r" && computer_choice == "s")
+      display_winning_message(player_choice, player, computer_choice, computer)
+    else 
+      display_winning_message(computer_choice, computer, player_choice, player)
+    end
+  end
+
   def play
-    player_hand.pick_hand
-    computer_hand.pick_hand
+    while true
+      player_choice = player_hand.pick_hand
+      player_hand.display_message(player_hand.player, player_choice)
+      computer_choice = computer_hand.pick_hand
+      computer_hand.display_message(computer_hand.computer, computer_choice)
+      compare_results(player_hand.player, player_choice, computer_hand.computer, computer_choice)
+
+      puts "Play again? (y/n)"
+      response = gets.chomp.downcase
+      break if response != "y"
+    end
+
+    puts "Thank you! Bye!"
   end
 end
 
