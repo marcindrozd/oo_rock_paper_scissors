@@ -8,7 +8,7 @@ class Player
   end
 
   def enter_name(who)
-    puts "Enter name for the #{who}"
+    puts "Please enter name for the #{who}:"
     name = gets.chomp
   end
 end
@@ -29,6 +29,8 @@ class PlayerHand < Hand
       player_choice = gets.chomp.downcase
       break if Game::CHOICES.keys.include? player_choice
     end
+
+    puts "#{player} picked #{Game::CHOICES[player_choice]}."
   end
 end
 
