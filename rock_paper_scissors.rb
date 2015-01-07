@@ -26,7 +26,7 @@ class PlayerHand < Hand
     @player = Player.new.enter_name("player")
   end
   
-  def pick_hand
+  def pick
     while true
       puts "Choose one: (p/r/s)"
       choice = gets.chomp.downcase
@@ -43,7 +43,7 @@ class ComputerHand < Hand
     @computer = Player.new.enter_name("computer")
   end
 
-  def pick_hand
+  def pick
     choice = Game::CHOICES.keys.sample 
   end
 end
@@ -82,9 +82,9 @@ class Game
 
   def play
     while true
-      player_choice = player_hand.pick_hand
+      player_choice = player_hand.pick
       player_hand.display_message(player_hand.player, player_choice)
-      computer_choice = computer_hand.pick_hand
+      computer_choice = computer_hand.pick
       computer_hand.display_message(computer_hand.computer, computer_choice)
       compare_results(player_hand.player, player_choice, computer_hand.computer, computer_choice)
 
